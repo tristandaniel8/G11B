@@ -9,4 +9,4 @@ services:
       DB_HOST: "mysql-appg1d.alwaysdata.net"
       DB_NAME: "appg1d_groupeb"
       DB_USER: "appg1d_groupeb"
-      DB_PASS: "Dev$G11B"
+      DB_PASS: "Dev$$G11B"
