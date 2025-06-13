@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Accueil - Système de Gestion Manège</title>
     <style>
-        body { font-family: sans-serif; display: grid; place-content: center; min-height: 100vh; margin: 0; background-color: #f4f4f4; }
-        .container { text-align: center; padding: 2rem; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .success { color: #28a745; }
-        .error { color: #dc3545; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 10%;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        h2 {
+            font-size: 24px;
+            color: #ff6600;
+        }
+        .btn {
+            background-color: teal;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .status {
+            margin-top: 40px;
+            font-style: italic;
+            color: gray;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hello World!</h1>
-        <p>This is the homepage of your new MVC application.</p>
-        <p class="<?php echo $connection_status ? 'success' : 'error'; ?>">
-            <?php echo htmlspecialchars($db_status, ENT_QUOTES, 'UTF-8'); ?>
-        </p>
+    <h1>Système de Gestion Manège</h1>
+    <h2>Le Grand Carrousel</h2>
+
+    <a href="/login"><button class="btn">Connexion</button></a>
+
+    <div class="status">
+        <?php if (isset($db_status)) echo htmlspecialchars($db_status); ?>
     </div>
 </body>
 </html>
