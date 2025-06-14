@@ -1,0 +1,128 @@
+/**
+ * Styles pour les thèmes clair et sombre
+ */
+
+/* Variables de couleur pour le thème clair (par défaut) */
+:root {
+    --primary-color: #FF6B00;
+    --secondary-color: #0066CC;
+    --accent-color: #FFD700;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --dark-color: #333;
+    --light-color: #fff;
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --card-bg: #fff;
+    --border-color: #e0e0e0;
+    --header-gradient-start: #FF6B00;
+    --header-gradient-end: #0066CC;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: rgba(0, 102, 204, 0.05);
+}
+
+/* Variables de couleur pour le thème sombre */
+.theme-dark {
+    --primary-color: #FF8C40;
+    --secondary-color: #3388DD;
+    --accent-color: #FFDD40;
+    --success-color: #34c759;
+    --danger-color: #ff453a;
+    --warning-color: #ffd60a;
+    --dark-color: #f8f9fa;
+    --light-color: #222;
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --card-bg: #1e1e1e;
+    --border-color: #444;
+    --header-gradient-start: #FF8C40;
+    --header-gradient-end: #3388DD;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* Styles généraux affectés par le thème */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+header {
+    background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
+}
+
+.history-table th {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-table td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Commutateur de thème */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 48px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.theme-switch-wrapper .sun-icon,
+.theme-switch-wrapper .moon-icon {
+    color: white;
+    margin: 0 5px;
+    font-size: 16px;
+} 

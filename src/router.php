@@ -5,6 +5,7 @@ require_once __DIR__ . '/Controllers/HomeController.php';
 require_once __DIR__ . '/Controllers/AuthController.php';
 require_once __DIR__ . '/Controllers/DashboardController.php';
 require_once __DIR__ . '/Controllers/AdminController.php';
+require_once __DIR__ . '/Controllers/EmailNotificationController.php';
 
 // Démarrer la session si elle n'est pas déjà démarrée
 if (session_status() === PHP_SESSION_NONE) {
@@ -53,6 +54,11 @@ switch ($request_uri) {
         $controller = new DashboardController();
         $controller->updateActuators();
         break;
+        
+    case '/update-weather-city':
+        $controller = new DashboardController();
+        $controller->updateWeatherCity();
+        break;
     
     // Administration
     case '/admin':
@@ -73,6 +79,17 @@ switch ($request_uri) {
     case '/admin/update-role':
         $controller = new AdminController();
         $controller->updateUserRole();
+        break;
+        
+    // Notifications par email
+    case '/email-notifications':
+        $controller = new EmailNotificationController();
+        $controller->index();
+        break;
+        
+    // Débogage des emails
+    case '/debug-email':
+        require_once __DIR__ . '/debug_email.php';
         break;
     
     // Page non trouvée

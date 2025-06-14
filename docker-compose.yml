@@ -10,8 +10,15 @@ services:
       DB_NAME: "manege_db"
       DB_USER: "manege_user"
       DB_PASS: "manege_password"
+      SMTP_HOST: "mailhog"
+      SMTP_PORT: "1025"
+      SMTP_USERNAME: ""
+      SMTP_PASSWORD: ""
+      FROM_EMAIL: "notifications@manegepark.com"
+      FROM_NAME: "ManegePark Notifications"
     depends_on:
       - db
+      - mailhog
 
   db:
     image: mysql:8.0
@@ -24,6 +31,12 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
 
 volumes:
   db_data:

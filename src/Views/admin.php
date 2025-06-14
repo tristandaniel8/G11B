@@ -77,6 +77,9 @@
             margin-right: 15px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
+        .header-logo i {
+            font-size: 28px;
+        }
         .user-info {
             display: flex;
             align-items: center;
@@ -303,7 +306,7 @@
         <div class="header-content">
             <div class="header-title">
                 <div class="header-logo">
-                    <span>MP</span>
+                    <i class="fas fa-user-shield"></i>
                 </div>
                 <h1>Administration des Utilisateurs - ManegePark</h1>
             </div>

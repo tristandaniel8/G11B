@@ -77,6 +77,9 @@
             margin-right: 15px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
+        .header-logo i {
+            font-size: 28px;
+        }
         .user-info {
             display: flex;
             align-items: center;
@@ -387,6 +390,170 @@
                 flex-direction: column;
             }
         }
+        
+        /* Styles pour la carte météo */
+        .weather-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .weather-main {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 102, 204, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .weather-icon {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+        }
+        .weather-info {
+            flex-grow: 1;
+        }
+        .weather-temp {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        .weather-desc {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        .weather-city {
+            font-size: 14px;
+            color: #666;
+        }
+        .weather-details {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .weather-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .weather-detail i {
+            font-size: 20px;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        .weather-detail span {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .weather-detail small {
+            font-size: 12px;
+            color: #666;
+        }
+        .weather-api-notice {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--warning-color);
+        }
+        .weather-api-notice p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .weather-api-notice i {
+            margin-right: 8px;
+            color: var(--warning-color);
+        }
+        .weather-api-notice ol {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+        .weather-api-notice li {
+            margin-bottom: 5px;
+        }
+        .weather-api-notice code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .weather-api-notice a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .weather-api-notice a:hover {
+            text-decoration: underline;
+        }
+        .weather-city-form {
+            margin-top: 15px;
+        }
+        .input-group {
+            display: flex;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .weather-city-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        .api-key-form {
+            margin-top: 15px;
+        }
+        .api-key-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        .weather-api-notice {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--warning-color);
+        }
+        .weather-api-notice p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .weather-api-notice i {
+            margin-right: 8px;
+            color: var(--warning-color);
+        }
+        .weather-api-notice ol {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+        .weather-api-notice li {
+            margin-bottom: 5px;
+        }
+        .weather-api-notice code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .weather-api-notice a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .weather-api-notice a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -394,7 +561,7 @@
         <div class="header-content">
             <div class="header-title">
                 <div class="header-logo">
-                    <span>MP</span>
+                    <i class="fas fa-tachometer-alt"></i>
                 </div>
                 <h1>Tableau de Bord - ManegePark</h1>
             </div>
@@ -415,6 +582,64 @@
                     <div class="status-circle <?= ($latestData['button_status'] == 'Appuyé') ? 'status-on' : 'status-off' ?>"></div>
                     <span class="status-text"><?= htmlspecialchars($latestData['button_status']) ?></span>
                 </div>
+            </div>
+            
+            <!-- Météo -->
+            <div class="card" style="border-top-color: #0066CC;">
+                <h2 class="card-title"><i class="fas fa-cloud-sun"></i> Météo</h2>
+                <?php if (!empty($weatherData) && !isset($weatherData['error'])): ?>
+                <div class="weather-container">
+                    <div class="weather-main">
+                        <?php if (isset($weatherData['icon'])): ?>
+                        <img src="https://openweathermap.org/img/wn/<?= htmlspecialchars($weatherData['icon']) ?>@2x.png" alt="Icône météo" class="weather-icon">
+                        <?php endif; ?>
+                        <div class="weather-info">
+                            <div class="weather-temp"><?= isset($weatherData['temperature']) ? htmlspecialchars($weatherData['temperature']) . '°C' : 'N/A' ?></div>
+                            <div class="weather-desc"><?= isset($weatherData['description']) ? htmlspecialchars($weatherData['description']) : 'N/A' ?></div>
+                            <div class="weather-city"><?= isset($weatherData['city']) ? htmlspecialchars($weatherData['city']) : 'N/A' ?></div>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="weather-detail">
+                            <i class="fas fa-tint"></i>
+                            <span><?= isset($weatherData['humidity']) ? htmlspecialchars($weatherData['humidity']) . '%' : 'N/A' ?></span>
+                            <small>Humidité</small>
+                        </div>
+                        <div class="weather-detail">
+                            <i class="fas fa-wind"></i>
+                            <span><?= isset($weatherData['wind_speed']) ? htmlspecialchars($weatherData['wind_speed']) . ' m/s' : 'N/A' ?></span>
+                            <small>Vent</small>
+                        </div>
+                    </div>
+                    <form class="weather-city-form" action="/update-weather-city" method="post">
+                        <div class="input-group">
+                            <input type="text" name="city" placeholder="Changer de ville..." class="weather-city-input" required>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <?php else: ?>
+                <div class="status-indicator">
+                    <div class="status-circle status-off"></div>
+                    <span class="status-text">
+                        <?php if (isset($weatherData['error'])): ?>
+                            <?= htmlspecialchars($weatherData['error']) ?>
+                        <?php else: ?>
+                            Données météo non disponibles
+                        <?php endif; ?>
+                    </span>
+                </div>
+                <?php if (isset($weatherData['error']) && strpos($weatherData['error'], 'Clé API') !== false): ?>
+                <div class="weather-api-notice">
+                    <p><i class="fas fa-info-circle"></i> Pour activer cette fonctionnalité:</p>
+                    <ol>
+                        <li>Créez un compte sur <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></li>
+                        <li>Obtenez une clé API gratuite dans votre profil</li>
+                        <li>Modifiez le fichier <code>config.php</code> et remplacez <code>YOUR_API_KEY</code> par votre clé</li>
+                    </ol>
+                </div>
+                <?php endif; ?>
+                <?php endif; ?>
             </div>
             
             <!-- Statut du moteur -->

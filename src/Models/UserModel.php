@@ -9,12 +9,13 @@ class UserModel {
     }
 
     private function createTablesIfNotExist() {
-        // Création de la table pour stocker les utilisateurs
+        // Création de la table utilisateurs
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 username VARCHAR(50) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
+                email VARCHAR(255) DEFAULT NULL,
                 role ENUM('admin', 'security') NOT NULL DEFAULT 'security',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
@@ -27,18 +28,19 @@ class UserModel {
         }
     }
 
-    public function createUser($username, $password, $role = 'security') {
+    public function createUser($username, $password, $role = 'security', $email = null) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         $stmt = $this->pdo->prepare("
-            INSERT INTO users (username, password, role)
-            VALUES (:username, :password, :role)
+            INSERT INTO users (username, password, role, email)
+            VALUES (:username, :password, :role, :email)
         ");
         
         return $stmt->execute([
             'username' => $username,
             'password' => $hashedPassword,
-            'role' => $role
+            'role' => $role,
+            'email' => $email
         ]);
     }
 
@@ -82,6 +84,26 @@ class UserModel {
         return $stmt->execute([
             'id' => $id,
             'role' => $role
+        ]);
+    }
+    
+    public function getUserById($id) {
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM users WHERE id = :id
+        ");
+        
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch();
+    }
+    
+    public function updateUserEmail($id, $email) {
+        $stmt = $this->pdo->prepare("
+            UPDATE users SET email = :email WHERE id = :id
+        ");
+        
+        return $stmt->execute([
+            'id' => $id,
+            'email' => $email
         ]);
     }
 } 
