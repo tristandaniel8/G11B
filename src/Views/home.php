@@ -10,6 +10,7 @@
             --primary-color: #FF6B00;
             --secondary-color: #0066CC;
             --accent-color: #FFD700;
+            --eco-color: #4CAF50; /* Nouvelle couleur pour l'écoresponsabilité */
             --dark-color: #333;
             --light-color: #fff;
         }
@@ -180,6 +181,67 @@
             transition: color 0.3s;
             line-height: 1.6;
         }
+        /* Section écoresponsable */
+        .eco-section {
+            background-color: #f5f9f5;
+            margin: 50px -20px;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .eco-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--eco-color), #8BC34A);
+        }
+        .eco-section h2 {
+            color: var(--eco-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .eco-section p {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #444;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .eco-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .eco-badge {
+            background-color: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .eco-badge i {
+            color: var(--eco-color);
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .eco-badge span {
+            font-weight: 600;
+            color: #444;
+        }
+        .btn-eco {
+            background: linear-gradient(45deg, var(--eco-color), #8BC34A);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-eco:hover {
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
         footer {
             background-color: var(--dark-color);
             color: white;
@@ -251,6 +313,10 @@
             .features {
                 grid-template-columns: 1fr;
             }
+            .eco-badges {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -285,6 +351,29 @@
             </div>
         </div>
         
+        <!-- Nouvelle section écoresponsable -->
+        <div class="eco-section">
+            <h2><i class="fas fa-leaf"></i> ManegePark Écoresponsable</h2>
+            <p>Notre engagement pour l'environnement va au-delà des mots. Découvrez comment nous avons conçu notre parc et notre système de gestion pour minimiser notre impact écologique tout en offrant une expérience exceptionnelle.</p>
+            
+            <div class="eco-badges">
+                <div class="eco-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>-45% de consommation énergétique</span>
+                </div>
+                <div class="eco-badge">
+                    <i class="fas fa-cloud"></i>
+                    <span>-35% d'émissions de CO2</span>
+                </div>
+                <div class="eco-badge">
+                    <i class="fas fa-tint"></i>
+                    <span>-30% de consommation d'eau</span>
+                </div>
+            </div>
+            
+            <a href="/eco-responsibility" class="btn btn-eco">Découvrir nos initiatives <i class="fas fa-leaf"></i></a>
+        </div>
+        
         <?php if (isset($db_status)): ?>
             <div class="status <?= $connection_status ? 'success' : 'error' ?>">
                 <?= htmlspecialchars($db_status) ?>
@@ -294,7 +383,8 @@
     
     <footer>
         <div class="footer-content">
-            <p>&copy; 2023 ManegePark - Système de Gestion Manège</p>
+            <p>&copy; <?= date('Y') ?> ManegePark - Système de Gestion Manège</p>
+            <p><a href="/eco-responsibility" style="color: #4CAF50; text-decoration: none;"><i class="fas fa-leaf"></i> Un parc écoresponsable</a></p>
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>

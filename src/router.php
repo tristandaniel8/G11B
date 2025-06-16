@@ -6,6 +6,7 @@ require_once __DIR__ . '/Controllers/AuthController.php';
 require_once __DIR__ . '/Controllers/DashboardController.php';
 require_once __DIR__ . '/Controllers/AdminController.php';
 require_once __DIR__ . '/Controllers/EmailNotificationController.php';
+require_once __DIR__ . '/Controllers/EcoResponsibilityController.php';
 
 // Démarrer la session si elle n'est pas déjà démarrée
 if (session_status() === PHP_SESSION_NONE) {
@@ -58,6 +59,12 @@ switch ($request_uri) {
     case '/update-weather-city':
         $controller = new DashboardController();
         $controller->updateWeatherCity();
+        break;
+    
+    // Page d'écoresponsabilité
+    case '/eco-responsibility':
+        $controller = new EcoResponsibilityController();
+        $controller->index();
         break;
     
     // Administration
