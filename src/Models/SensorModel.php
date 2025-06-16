@@ -43,7 +43,19 @@ class SensorModel {
             LIMIT 1
         ");
         
-        return $stmt->fetch();
+        $result = $stmt->fetch();
+        
+        // Si aucune donnée n'est trouvée, retourner un tableau par défaut au lieu de false
+        if ($result === false) {
+            return [
+                'button_status' => 'Non Appuyé',
+                'motor_status' => 0,
+                'led_status' => 0,
+                'potentiometer_value' => 0
+            ];
+        }
+        
+        return $result;
     }
 
     public function getHistory($limit = 10) {

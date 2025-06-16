@@ -44,6 +44,11 @@ class DashboardController {
         // Récupérer les données météo
         $weatherData = $this->weatherModel->getCurrentWeather();
         
+        // S'assurer que $weatherData est un tableau
+        if (!is_array($weatherData)) {
+            $weatherData = ['error' => 'Données météo non disponibles'];
+        }
+        
         require_once __DIR__ . '/../Views/dashboard.php';
     }
     
