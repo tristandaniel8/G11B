@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // IMPORTANT: Change this to the physical pin connected to your motor driver
-const int MOTOR_PIN = 2;
+const int MOTOR_PIN = 36;
 const long BAUD_RATE = 9600;
 
 // --- GLOBAL VARIABLES ---
@@ -76,6 +76,7 @@ void handleSerialCommands() {
 void runMotor() {
   // If the motor should be off, ensure the pin is LOW and exit the function.
   if (!motorIsRunning) {
+    //Serial.println("motor should be off");
     digitalWrite(MOTOR_PIN, LOW);
     return;
   }
