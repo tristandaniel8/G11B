@@ -642,7 +642,7 @@
                 <?php endif; ?>
             </div>
             
-            <!-- Statut du moteur -->
+            <!-- Statut du moteur avec potentiomètre intégré -->
             <div class="card" style="border-top-color: <?= ($latestData['motor_status'] == 1) ? '#28a745' : '#dc3545' ?>;">
                 <h2 class="card-title"><i class="fas fa-cogs"></i> Moteur</h2>
                 <div class="status-indicator">
@@ -652,6 +652,19 @@
                 <div class="control-buttons">
                     <button class="btn btn-success" onclick="updateActuator('motor', 1)"><i class="fas fa-play"></i> Activer</button>
                     <button class="btn btn-danger" onclick="updateActuator('motor', 0)"><i class="fas fa-stop"></i> Désactiver</button>
+                </div>
+                
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+                
+                <!-- Contrôle du potentiomètre intégré -->
+                <h3 style="color: var(--primary-color); display: flex; align-items: center;"><i class="fas fa-sliders-h" style="margin-right: 10px;"></i> Contrôle de vitesse</h3>
+                <p>Valeur actuelle: <span class="slider-value"><?= round(($latestData['potentiometer_value'] / 1023) * 10, 1) ?></span> / 10</p>
+                <div class="gauge-container">
+                    <div class="gauge-fill" style="width: <?= ($latestData['potentiometer_value'] / 1023) * 100 ?>%;"></div>
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" step="0.1" value="<?= round(($latestData['potentiometer_value'] / 1023) * 10, 1) ?>" class="slider" id="potentiometer-slider">
+                    <button class="btn btn-primary" onclick="updatePotentiometer()"><i class="fas fa-check"></i> Appliquer</button>
                 </div>
             </div>
             
@@ -665,19 +678,6 @@
                 <div class="control-buttons">
                     <button class="btn btn-success" onclick="updateActuator('led', 1)"><i class="fas fa-power-off"></i> Allumer</button>
                     <button class="btn btn-danger" onclick="updateActuator('led', 0)"><i class="fas fa-power-off"></i> Éteindre</button>
-                </div>
-            </div>
-            
-            <!-- Valeur du potentiomètre -->
-            <div class="card" style="border-top-color: var(--accent-color);">
-                <h2 class="card-title"><i class="fas fa-sliders-h"></i> Potentiomètre</h2>
-                <p>Valeur actuelle: <span class="slider-value"><?= htmlspecialchars($latestData['potentiometer_value']) ?></span> / 1023</p>
-                <div class="gauge-container">
-                    <div class="gauge-fill" style="width: <?= ($latestData['potentiometer_value'] / 1023) * 100 ?>%;"></div>
-                </div>
-                <div class="slider-container">
-                    <input type="range" min="0" max="1023" value="<?= htmlspecialchars($latestData['potentiometer_value']) ?>" class="slider" id="potentiometer-slider">
-                    <button class="btn btn-primary" onclick="updatePotentiometer()"><i class="fas fa-check"></i> Appliquer</button>
                 </div>
             </div>
         </div>
@@ -757,9 +757,12 @@
             const sliderValue = document.getElementById('potentiometer-slider').value;
             const data = new FormData();
             
+            // Convertir la valeur de 0-10 à 0-1023
+            const potValue = Math.round((sliderValue / 10) * 1023);
+            
             data.append('motor_status', <?= $latestData['motor_status'] ?>);
             data.append('led_status', <?= $latestData['led_status'] ?>);
-            data.append('potentiometer_value', sliderValue);
+            data.append('potentiometer_value', potValue);
             
             fetch('/update-actuators', {
                 method: 'POST',
@@ -781,7 +784,7 @@
         
         slider.addEventListener('input', function() {
             sliderValue.textContent = this.value;
-            gaugeFill.style.width = (this.value / 1023) * 100 + '%';
+            gaugeFill.style.width = (this.value / 10) * 100 + '%';
         });
         
         // Rafraîchir automatiquement la page toutes les 10 secondes

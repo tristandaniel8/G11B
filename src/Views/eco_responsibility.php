@@ -255,15 +255,17 @@
                 <h1>ManegePark - Écoresponsable</h1>
             </div>
         </div>
-        <div class="navigation">
-            <a href="/"><i class="fas fa-home"></i> Accueil</a>
-            <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de Bord</a>
-            <a href="/eco-responsibility"><i class="fas fa-leaf"></i> Écoresponsabilité</a>
-        </div>
     </header>
     
     <div class="container">
-        <a href="javascript:history.back()" class="back-link"><i class="fas fa-arrow-left"></i> Retour</a>
+        <a href="/" class="back-link"><i class="fas fa-home"></i> Accueil</a>
+        
+        <?php if (isset($_SESSION['contact_success']) && !empty($_SESSION['contact_success'])): ?>
+            <div class="alert success-alert" style="background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; color: #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 500;">
+                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['contact_success']) ?>
+            </div>
+            <?php unset($_SESSION['contact_success']); // Effacer le message après l'avoir affiché ?>
+        <?php endif; ?>
         
         <div class="card">
             <h2 class="card-title"><i class="fas fa-leaf"></i> Notre Engagement Écoresponsable</h2>

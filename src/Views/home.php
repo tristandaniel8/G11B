@@ -384,7 +384,10 @@
     <footer>
         <div class="footer-content">
             <p>&copy; <?= date('Y') ?> ManegePark - Système de Gestion Manège</p>
-            <p><a href="/eco-responsibility" style="color: #4CAF50; text-decoration: none;"><i class="fas fa-leaf"></i> Un parc écoresponsable</a></p>
+            <p>
+                <a href="/eco-responsibility" style="color: #4CAF50; text-decoration: none; margin-right: 15px;"><i class="fas fa-leaf"></i> Un parc écoresponsable</a>
+                <a href="/contact" style="color: #FF6B00; text-decoration: none;"><i class="fas fa-envelope"></i> Contactez-nous</a>
+            </p>
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
