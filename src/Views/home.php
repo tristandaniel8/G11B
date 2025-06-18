@@ -1,3 +1,9 @@
+<?php
+// Démarrer la session si elle n'est pas déjà démarrée
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -331,6 +337,13 @@
     </div>
     
     <div class="container">
+        <?php if (isset($_SESSION['contact_success']) && !empty($_SESSION['contact_success'])): ?>
+            <div class="alert" style="background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; color: #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 30px; font-weight: 500; text-align: center;">
+                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['contact_success']) ?>
+            </div>
+            <?php unset($_SESSION['contact_success']); // Effacer le message après l'avoir affiché ?>
+        <?php endif; ?>
+        
         <div class="features">
             <div class="feature">
                 <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>

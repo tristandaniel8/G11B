@@ -6,6 +6,11 @@ class ContactController {
      * Affiche le formulaire de contact
      */
     public function index() {
+        // Démarrer la session si elle n'est pas déjà démarrée
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         require_once __DIR__ . '/../Views/contact.php';
     }
     
@@ -13,6 +18,11 @@ class ContactController {
      * Traite l'envoi du formulaire de contact
      */
     public function submit() {
+        // Démarrer la session si elle n'est pas déjà démarrée
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         $success = false;
         $message = '';
         $debug = '';
@@ -175,9 +185,9 @@ class ContactController {
                     $debug = "Tentative d'envoi à : $to via $smtpHost:$smtpPort\n";
                     $debug .= "Message envoyé avec succès par connexion directe SMTP";
                     
-                    // Redirection vers la page d'écoresponsabilité après envoi réussi
+                    // Redirection vers la page d'accueil après envoi réussi
                     $_SESSION['contact_success'] = $message;
-                    header('Location: /eco-responsibility');
+                    header('Location: /');
                     exit;
                     
                 } catch (Exception $e) {
