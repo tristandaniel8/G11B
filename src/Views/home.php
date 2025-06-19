@@ -1,9 +1,3 @@
-<?php
-// Démarrer la session si elle n'est pas déjà démarrée
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -337,13 +331,6 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     
     <div class="container">
-        <?php if (isset($_SESSION['contact_success']) && !empty($_SESSION['contact_success'])): ?>
-            <div class="alert" style="background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; color: #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 30px; font-weight: 500; text-align: center;">
-                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['contact_success']) ?>
-            </div>
-            <?php unset($_SESSION['contact_success']); // Effacer le message après l'avoir affiché ?>
-        <?php endif; ?>
-        
         <div class="features">
             <div class="feature">
                 <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
@@ -397,10 +384,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <footer>
         <div class="footer-content">
             <p>&copy; <?= date('Y') ?> ManegePark - Système de Gestion Manège</p>
-            <p>
-                <a href="/eco-responsibility" style="color: #4CAF50; text-decoration: none; margin-right: 15px;"><i class="fas fa-leaf"></i> Un parc écoresponsable</a>
-                <a href="/contact" style="color: #FF6B00; text-decoration: none;"><i class="fas fa-envelope"></i> Contactez-nous</a>
-            </p>
+            <p><a href="/eco-responsibility" style="color: #4CAF50; text-decoration: none;"><i class="fas fa-leaf"></i> Un parc écoresponsable</a></p>
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>

@@ -62,6 +62,12 @@ switch ($request_uri) {
         $controller->updateWeatherCity();
         break;
     
+    // API pour récupérer l'historique du moteur
+    case '/api/motor-speed-history':
+        $controller = new DashboardController();
+        $controller->getMotorSpeedHistoryJson();
+        break;
+    
     // Page d'écoresponsabilité
     case '/eco-responsibility':
         $controller = new EcoResponsibilityController();

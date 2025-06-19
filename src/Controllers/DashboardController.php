@@ -49,6 +49,23 @@ class DashboardController {
             $weatherData = ['error' => 'Données météo non disponibles'];
         }
         
+        // Récupérer la dernière vitesse du moteur
+        $motorSpeed = $this->sensorModel->getLatestMotorSpeed();
+        
+        // Récupérer l'historique des vitesses du moteur pour le graphique
+        $motorSpeedHistory = $this->sensorModel->getMotorSpeedHistory(20);
+        
+        // Préparer les données pour le graphique
+        $chartLabels = [];
+        $chartData = [];
+        
+        foreach ($motorSpeedHistory as $entry) {
+            // Formater la date pour l'affichage
+            $date = new DateTime($entry['updateTime']);
+            $chartLabels[] = $date->format('H:i:s');
+            $chartData[] = $entry['newSpeed'];
+        }
+        
         require_once __DIR__ . '/../Views/dashboard.php';
     }
     
@@ -156,6 +173,38 @@ class DashboardController {
         
         // Rediriger vers le tableau de bord
         header('Location: /dashboard');
+        exit;
+    }
+    
+    /**
+     * Récupère l'historique des mises à jour de vitesse du moteur au format JSON
+     */
+    public function getMotorSpeedHistoryJson() {
+        // Désactiver la vérification d'authentification pour cette méthode API
+        $db_host = getenv('DB_HOST');
+        $db_name = getenv('DB_NAME');
+        $db_user = getenv('DB_USER');
+        $db_pass = getenv('DB_PASS');
+        
+        $db = new Database($db_host, $db_name, $db_user, $db_pass);
+        $sensorModel = new SensorModel($db->getConnection());
+        
+        // Récupérer l'historique des vitesses
+        $motorSpeedHistory = $sensorModel->getMotorSpeedHistory(50);
+        
+        // Préparer les données pour le graphique
+        $chartData = [];
+        
+        foreach ($motorSpeedHistory as $entry) {
+            $chartData[] = [
+                'time' => $entry['updateTime'],
+                'speed' => $entry['newSpeed']
+            ];
+        }
+        
+        // Retourner les données au format JSON
+        header('Content-Type: application/json');
+        echo json_encode($chartData);
         exit;
     }
 } 

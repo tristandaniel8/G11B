@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord - ManegePark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-color: #FF6B00;
@@ -554,6 +555,52 @@
         .weather-api-notice a:hover {
             text-decoration: underline;
         }
+        /* Styles pour le graphique du moteur */
+        .motor-chart-container {
+            margin-top: 20px;
+            position: relative;
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chart-title i {
+            margin-right: 10px;
+        }
+        
+        .chart-refresh-btn {
+            background-color: rgba(0, 102, 204, 0.1);
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            color: var(--secondary-color);
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .chart-refresh-btn i {
+            margin-right: 8px;
+        }
+        
+        .chart-refresh-btn:hover {
+            background-color: rgba(0, 102, 204, 0.2);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -665,6 +712,15 @@
                 <div class="slider-container">
                     <input type="range" min="0" max="10" step="0.1" value="<?= round(($latestData['potentiometer_value'] / 1023) * 10, 1) ?>" class="slider" id="potentiometer-slider">
                     <button class="btn btn-primary" onclick="updatePotentiometer()"><i class="fas fa-check"></i> Appliquer</button>
+                </div>
+                
+                <!-- Ajout du graphique d'évolution de la vitesse du moteur -->
+                <div class="motor-chart-container">
+                    <div class="chart-title">
+                        <i class="fas fa-chart-line"></i> Évolution de la vitesse du moteur
+                        <button id="refresh-chart" class="chart-refresh-btn"><i class="fas fa-sync-alt"></i> Actualiser</button>
+                    </div>
+                    <canvas id="motorSpeedChart"></canvas>
                 </div>
             </div>
             
@@ -786,6 +842,79 @@
             sliderValue.textContent = this.value;
             gaugeFill.style.width = (this.value / 10) * 100 + '%';
         });
+        
+        // Initialisation du graphique de vitesse du moteur
+        const ctx = document.getElementById('motorSpeedChart').getContext('2d');
+        let motorChart;
+        
+        // Fonction pour initialiser le graphique
+        function initChart(labels, data) {
+            motorChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Vitesse du moteur (0-10)',
+                        data: data,
+                        backgroundColor: 'rgba(255, 107, 0, 0.2)',
+                        borderColor: '#FF6B00',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#FF6B00',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Fonction pour récupérer les données du moteur depuis l'API
+        function fetchMotorData() {
+            fetch('/api/motor-speed-history')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(entry => {
+                        const date = new Date(entry.time);
+                        return date.toLocaleTimeString();
+                    });
+                    const speeds = data.map(entry => entry.speed);
+                    
+                    if (motorChart) {
+                        motorChart.destroy();
+                    }
+                    
+                    initChart(labels, speeds);
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données du moteur:', error));
+        }
+        
+        // Initialiser le graphique avec les données initiales
+        initChart(<?= json_encode($chartLabels) ?>, <?= json_encode($chartData) ?>);
+        
+        // Configurer le bouton d'actualisation
+        document.getElementById('refresh-chart').addEventListener('click', fetchMotorData);
         
         // Rafraîchir automatiquement la page toutes les 10 secondes
         setTimeout(() => {
