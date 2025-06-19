@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous - ManegePark</title>
+    <title>Contact - ManegePark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #FF6B00;
             --secondary-color: #0066CC;
-            --accent-color: #4CAF50;
+            --accent-color: #FFD700;
             --success-color: #28a745;
             --danger-color: #dc3545;
             --warning-color: #ffc107;
@@ -80,190 +80,234 @@
         .header-logo i {
             font-size: 28px;
         }
-        .navigation {
-            margin-top: 20px;
-            text-align: center;
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
-        .navigation a {
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
             color: white;
             text-decoration: none;
-            margin: 0 15px;
             font-weight: 500;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
         }
-        .navigation a:hover {
+        nav ul li a:hover {
             color: var(--accent-color);
+            transform: translateY(-2px);
         }
-        .card {
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .contact-card {
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            padding: 25px;
+            padding: 30px;
             margin-bottom: 30px;
-            transition: all 0.3s;
             border-top: 5px solid var(--primary-color);
+            transition: all 0.3s;
         }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        .card-title {
-            margin-top: 0;
+        .contact-card h2 {
             color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
             border-bottom: 1px solid #eee;
             padding-bottom: 15px;
             font-size: 24px;
             display: flex;
             align-items: center;
         }
-        .card-title i {
+        .contact-card h2 i {
             margin-right: 10px;
-            font-size: 28px;
+            font-size: 24px;
         }
-        .form-group {
+        .contact-form .form-group {
             margin-bottom: 20px;
         }
-        .form-group label {
+        .contact-form label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--dark-color);
         }
-        .form-control {
+        .contact-form input,
+        .contact-form textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
+            box-sizing: border-box;
         }
-        .form-control:focus {
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--secondary-color);
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
         }
-        textarea.form-control {
+        .contact-form textarea {
             min-height: 150px;
             resize: vertical;
         }
         .btn {
-            background: linear-gradient(45deg, var(--primary-color), #FF9500);
-            color: white;
             padding: 12px 25px;
             border: none;
             border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
-        }
-        .btn i {
-            margin-right: 8px;
-        }
-        .contact-info {
-            padding: 30px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-        }
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-        }
-        .contact-info-icon {
-            font-size: 24px;
-            color: var(--primary-color);
-            margin-right: 15px;
-            min-width: 30px;
-            text-align: center;
-        }
-        .contact-info-content h3 {
-            margin: 0 0 5px 0;
-            font-size: 18px;
-            color: var(--dark-color);
-        }
-        .contact-info-content p {
-            margin: 0;
-            color: #666;
-        }
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            text-decoration: none;
+            font-size: 16px;
         }
-        .social-link:hover {
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), #FF9500);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+        .btn-primary:hover {
             transform: translateY(-3px);
-            background-color: var(--secondary-color);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4);
         }
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .back-link:hover {
-            color: var(--secondary-color);
-        }
-        .back-link i {
+        .btn i {
             margin-right: 8px;
         }
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        .alert-success {
-            background-color: rgba(40, 167, 69, 0.1);
-            border-left: 4px solid var(--success-color);
-            color: var(--success-color);
-        }
-        .alert-danger {
-            background-color: rgba(220, 53, 69, 0.1);
+        .error-message {
+            background-color: #f8d7da;
             border-left: 4px solid var(--danger-color);
-            color: var(--danger-color);
+            color: #721c24;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .error-message ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .contact-info {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .contact-method {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 20px;
+        }
+        .contact-details h3 {
+            margin: 0 0 5px 0;
+            color: var(--dark-color);
+            font-size: 18px;
+        }
+        .contact-details p {
+            margin: 0;
+            color: #666;
+        }
+        .contact-details a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .contact-details a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
         }
         footer {
-            background-color: #333;
+            background-color: var(--dark-color);
             color: white;
             padding: 30px 0;
             margin-top: 50px;
-            text-align: center;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .footer-logo i {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .footer-links {
+            display: flex;
+        }
+        .footer-links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        .footer-links a i {
+            margin-right: 5px;
         }
         @media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .header-content {
+            .header-content, .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
             .header-title {
                 margin-bottom: 15px;
                 justify-content: center;
+            }
+            nav ul {
+                justify-content: center;
+            }
+            .footer-logo {
+                margin-bottom: 20px;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .footer-links a {
+                margin: 5px 10px;
             }
         }
     </style>
@@ -273,101 +317,96 @@
         <div class="header-content">
             <div class="header-title">
                 <div class="header-logo">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-ticket-alt"></i>
                 </div>
-                <h1>Contactez-nous</h1>
+                <h1>ManegePark</h1>
             </div>
+            <nav>
+                <ul>
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                        <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                    <?php else: ?>
+                        <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+                    <?php endif; ?>
+                    <li><a href="/eco-responsibility"><i class="fas fa-leaf"></i> Écoresponsabilité</a></li>
+                    <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
     
     <div class="container">
-        <a href="/" class="back-link"><i class="fas fa-home"></i> Accueil</a>
-        
-        <?php if (isset($message) && !empty($message)): ?>
-            <div class="alert <?= $success ? 'alert-success' : 'alert-danger' ?>">
-                <?= htmlspecialchars($message) ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (isset($debug) && !empty($debug) && isset($_GET['debug'])): ?>
-            <div class="alert" style="background-color: #f8f9fa; border-left: 4px solid #6c757d; color: #6c757d;">
-                <h4>Informations de débogage</h4>
-                <pre style="white-space: pre-wrap;"><?= htmlspecialchars($debug) ?></pre>
-            </div>
-        <?php endif; ?>
-        
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-paper-plane"></i> Envoyez-nous un message</h2>
-            <p>Avez-vous des questions sur nos initiatives écoresponsables ou souhaitez-vous en savoir plus sur ManegePark ? N'hésitez pas à nous contacter, nous vous répondrons dans les plus brefs délais.</p>
+        <div class="contact-card">
+            <h2><i class="fas fa-paper-plane"></i> Contactez-nous</h2>
             
-            <div class="contact-grid">
-                <div>
-                    <form action="/contact/submit" method="post">
-                        <div class="form-group">
-                            <label for="name">Nom complet</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Objet</label>
-                            <input type="text" id="subject" name="subject" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="form-control" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    </form>
+            <?php if (isset($_SESSION['contact_errors'])): ?>
+                <div class="error-message">
+                    <strong>Erreur(s) :</strong>
+                    <ul>
+                        <?php foreach ($_SESSION['contact_errors'] as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php unset($_SESSION['contact_errors']); ?>
+            <?php endif; ?>
+            
+            <form class="contact-form" action="/contact/submit" method="post">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" value="<?= htmlspecialchars($_SESSION['contact_form_data']['name'] ?? '') ?>" required>
                 </div>
                 
-                <div class="contact-info">
-                    <h3>Informations de contact</h3>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-info-content">
-                            <h3>Adresse</h3>
-                            <p>123 Avenue des Attractions<br>75001 Paris, France</p>
-                        </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_SESSION['contact_form_data']['email'] ?? '') ?>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Sujet</label>
+                    <input type="text" id="subject" name="subject" value="<?= htmlspecialchars($_SESSION['contact_form_data']['subject'] ?? '') ?>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required><?= htmlspecialchars($_SESSION['contact_form_data']['message'] ?? '') ?></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
+            </form>
+            
+            <?php unset($_SESSION['contact_form_data']); ?>
+            
+            <div class="contact-info">
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="contact-info-content">
-                            <h3>Téléphone</h3>
-                            <p>+33 1 23 45 67 89</p>
-                        </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p><a href="mailto:contact@manegepark.com">contact@manegepark.com</a></p>
                     </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-info-content">
-                            <h3>Email</h3>
-                            <p>contact@manegepark.com</p>
-                        </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
                     </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-info-content">
-                            <h3>Heures d'ouverture</h3>
-                            <p>Lun - Ven: 9h00 - 18h00<br>Sam - Dim: 10h00 - 17h00</p>
-                        </div>
+                    <div class="contact-details">
+                        <h3>Téléphone</h3>
+                        <p><a href="tel:+33123456789">+33 (0)1 23 45 67 89</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Adresse</h3>
+                        <p>123 Avenue du Parc, 75001 Paris, France</p>
                     </div>
                 </div>
             </div>
@@ -375,8 +414,22 @@
     </div>
     
     <footer>
-        <p>&copy; <?= date('Y') ?> ManegePark - Tous droits réservés</p>
-        <p>Un parc d'attractions écoresponsable</p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-ticket-alt"></i>
+                ManegePark
+            </div>
+            <div class="footer-links">
+                <a href="/"><i class="fas fa-home"></i> Accueil</a>
+                <a href="/eco-responsibility"><i class="fas fa-leaf"></i> Écoresponsabilité</a>
+                <a href="/contact"><i class="fas fa-envelope"></i> Contact</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+                <?php else: ?>
+                    <a href="/login"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+                <?php endif; ?>
+            </div>
+        </div>
     </footer>
 </body>
 </html> 

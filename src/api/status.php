@@ -4,8 +4,9 @@
  */
 
 // Inclure les fichiers nécessaires
-require_once '../config/config.php';
-require_once '../models/SensorModel.php';
+require_once '../config.php';
+require_once '../Models/Database.php';
+require_once '../Models/SensorModel.php';
 
 // Configurer les en-têtes pour permettre l'accès AJAX
 header('Content-Type: application/json');
@@ -21,8 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 try {
+    // Connexion à la base de données
+    $db_host = getenv('DB_HOST');
+    $db_name = getenv('DB_NAME');
+    $db_user = getenv('DB_USER');
+    $db_pass = getenv('DB_PASS');
+    
+    $db = new Database($db_host, $db_name, $db_user, $db_pass);
+    
     // Créer une instance du modèle
-    $sensorModel = new SensorModel();
+    $sensorModel = new SensorModel($db->getConnection());
     
     // Récupérer les dernières données
     $latestData = $sensorModel->getLatestData();
