@@ -140,42 +140,42 @@
         .btn:hover::after {
             left: 100%;
         }
-        .error {
-            color: #dc3545;
+        .message {
             margin-bottom: 20px;
             padding: 10px;
-            background-color: rgba(220, 53, 69, 0.1);
             border-radius: 5px;
             font-size: 14px;
             text-align: center;
+        }
+        .error {
+            color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
         }
         .success {
             color: #198754;
-            margin-bottom: 20px;
-            padding: 10px;
             background-color: rgba(25, 135, 84, 0.1);
-            border-radius: 5px;
+        }
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
             font-size: 14px;
-            text-align: center;
         }
-        .register-link, .back-link {
-            text-align: center;
-            margin-top: 25px;
-        }
-        .register-link a, .back-link a {
+        .links-container a {
             color: var(--secondary-color);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s;
         }
-        .register-link a:hover, .back-link a:hover {
+        .links-container a:hover {
             color: var(--primary-color);
             text-decoration: underline;
         }
         .divider {
             display: flex;
             align-items: center;
-            margin: 30px 0;
+            margin: 20px 0;
         }
         .divider::before, .divider::after {
             content: '';
@@ -188,6 +188,20 @@
             color: #999;
             font-size: 14px;
         }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+         .back-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
@@ -205,14 +219,24 @@
         </div>
         <h1>Connexion</h1>
         
-        <?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
-            <div class="success">
-                <i class="fas fa-check-circle"></i> Inscription réussie ! Vous pouvez maintenant vous connecter.
+        <?php 
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (isset($_SESSION['registration_success'])): ?>
+            <div class="message success">
+                <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['registration_success']) ?>
             </div>
+            <?php unset($_SESSION['registration_success']); ?>
         <?php endif; ?>
         
+        <?php if (isset($_SESSION['login_success_message'])): ?>
+            <div class="message success">
+                <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['login_success_message']) ?>
+            </div>
+            <?php unset($_SESSION['login_success_message']); ?>
+        <?php endif; ?>
+
         <?php if (!empty($error)): ?>
-            <div class="error">
+            <div class="message error">
                 <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>
@@ -233,12 +257,16 @@
             <button type="submit" class="btn">Se connecter <i class="fas fa-sign-in-alt"></i></button>
         </form>
         
+        <div class="links-container">
+            <a href="/forgot-password"><i class="fas fa-question-circle"></i> Mot de passe oublié ?</a>
+        </div>
+
         <div class="divider">
             <span>OU</span>
         </div>
         
-        <div class="register-link">
-            <a href="/register"><i class="fas fa-user-plus"></i> Créer un compte</a>
+        <div style="text-align: center;">
+            <a href="/register" style="color: var(--secondary-color); text-decoration: none; font-weight: 600;"><i class="fas fa-user-plus"></i> Créer un compte</a>
         </div>
         
         <div class="back-link">
@@ -246,4 +274,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>

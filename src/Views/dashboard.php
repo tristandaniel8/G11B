@@ -36,19 +36,6 @@
             padding: 20px 0;
             margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0 0L100 0L100 100Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: 100px 100px;
-            opacity: 0.2;
         }
         .header-content {
             display: flex;
@@ -57,549 +44,129 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            position: relative;
-            z-index: 1;
         }
-        .header-title {
-            display: flex;
-            align-items: center;
-        }
+        .header-title { display: flex; align-items: center; }
         .header-logo {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-right: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            width: 50px; height: 50px; background-color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: var(--primary-color); font-weight: bold;
+            margin-right: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
-        .header-logo i {
-            font-size: 28px;
+        .header-logo i { font-size: 28px; }
+        .user-info { display: flex; align-items: center; flex-wrap: wrap; }
+        .user-info span { margin-right: 15px; font-weight: 500; display: flex; align-items: center; margin-bottom: 5px; }
+        .user-info span i { margin-right: 8px; font-size: 18px; }
+        .logout-btn, .nav-link {
+            background-color: rgba(255, 255, 255, 0.2); border: none; color: white;
+            padding: 10px 15px; border-radius: 50px; cursor: pointer; text-decoration: none;
+            font-weight: 600; display: flex; align-items: center; transition: all 0.3s; margin-left: 10px; margin-bottom:5px;
         }
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        .user-info span {
-            margin-right: 15px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-        .user-info span i {
-            margin-right: 8px;
-            font-size: 18px;
-        }
-        .logout-btn {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        .logout-btn i {
-            margin-right: 8px;
-        }
-        .logout-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
+        .logout-btn i, .nav-link i { margin-right: 8px; }
+        .logout-btn:hover, .nav-link:hover { background-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
         .card {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            transition: all 0.3s;
-            border-top: 5px solid transparent;
+            background-color: white; border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 25px;
+            transition: all 0.3s; border-top: 5px solid var(--primary-color);
+            display: flex; flex-direction: column; /* For footer alignment */
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
+        .card-content { flex-grow: 1; } /* For footer alignment */
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .card-title {
-            margin-top: 0;
-            color: var(--primary-color);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
+            margin-top: 0; color: var(--primary-color); border-bottom: 1px solid #eee;
+            padding-bottom: 15px; font-size: 20px; display: flex; align-items: center;
         }
-        .card-title i {
-            margin-right: 10px;
-            font-size: 24px;
-        }
+        .card-title i { margin-right: 10px; font-size: 24px; }
+        
         .status-indicator {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #f8f9fa;
+            display: flex; align-items: center; margin-bottom: 20px;
+            padding: 15px; border-radius: 10px; background-color: #f8f9fa;
         }
         .status-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 15px;
-            position: relative;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 20px; height: 20px; border-radius: 50%; margin-right: 12px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
         }
-        .status-circle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            border-radius: 50%;
-            opacity: 0.5;
+        .status-on { background-color: var(--success-color); animation: pulse 2s infinite; }
+        .status-off { background-color: var(--danger-color); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(40,167,69,0.7); } 70% { box-shadow: 0 0 0 10px rgba(40,167,69,0); } 100% { box-shadow: 0 0 0 0 rgba(40,167,69,0); } }
+        .status-text { font-weight: 600; font-size: 18px; }
+
+        .slider-container { margin-top: 15px; }
+        .slider {
+            width: 100%; margin-bottom: 10px; -webkit-appearance: none; appearance: none;
+            height: 10px; border-radius: 5px; background: #e0e0e0; outline: none;
         }
-        .status-on {
-            background-color: var(--success-color);
-            animation: pulse 2s infinite;
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 22px; height: 22px;
+            border-radius: 50%; background: var(--primary-color); cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s;
         }
-        .status-off {
-            background-color: var(--danger-color);
+        .slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        .slider-value-display { font-weight: bold; color: var(--primary-color); font-size: 20px; margin-bottom: 10px; }
+        
+        .btn {
+            padding: 10px 18px; border: none; border-radius: 50px; cursor: pointer;
+            font-weight: 600; display: inline-flex; align-items: center; justify-content: center;
+            transition: all 0.3s; box-shadow: 0 3px 10px rgba(0,0,0,0.1); text-decoration:none;
         }
-        @keyframes pulse {
+        .btn i { margin-right: 8px; }
+        .btn-primary { background: linear-gradient(45deg, var(--primary-color), #FF9500); color: white; }
+        .btn-secondary { background: linear-gradient(45deg, var(--gray-color), #5a6268); color: black;}
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        
+        .status-on-custom-green { /* For temperature > 37°C */
+            background-color: var(--success-color); /* Green */
+            animation: pulse-green 2s infinite;
+        }
+        .status-off-custom-red { /* For temperature <= 37°C */
+            background-color: var(--danger-color); /* Red */
+        }
+
+        @keyframes pulse-green { /* Re-using or make a new pulse if colors differ significantly */
             0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
             100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
         }
-        .status-text {
-            font-weight: 600;
-            font-size: 18px;
-        }
-        .gauge-container {
-            width: 100%;
-            height: 24px;
-            background-color: #e9ecef;
-            border-radius: 50px;
-            margin-top: 15px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .gauge-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 50px;
-            transition: width 0.5s ease;
-            position: relative;
-        }
-        .gauge-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
-            background-size: 20px 20px;
-            animation: move 1s linear infinite;
-            border-radius: 50px;
-        }
-        @keyframes move {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 0; }
-        }
-        .control-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            flex: 1;
-        }
-        .btn i {
-            margin-right: 8px;
-        }
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary-color), #FF9500);
-            color: white;
-        }
-        .btn-success {
-            background: linear-gradient(45deg, #20b046, #28a745);
-            color: white;
-        }
-        .btn-danger {
-            background: linear-gradient(45deg, #e04055, #dc3545);
-            color: white;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        .history-table th, .history-table td {
-            padding: 15px;
-            text-align: left;
-        }
-        .history-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-        .history-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        .history-table tr:hover {
-            background-color: rgba(255, 107, 0, 0.05);
-        }
-        .history-table td {
-            border-bottom: 1px solid #e9ecef;
-        }
-        .view-all-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            padding: 10px 20px;
-            border-radius: 50px;
-            background-color: rgba(0, 102, 204, 0.1);
-        }
-        .view-all-link:hover {
-            background-color: rgba(0, 102, 204, 0.2);
-            transform: translateY(-2px);
-        }
-        .view-all-link i {
-            margin-left: 8px;
-        }
-        .slider-container {
-            margin-top: 20px;
-        }
-        .slider {
-            width: 100%;
-            margin-bottom: 15px;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 8px;
-            border-radius: 5px;
-            background: #e0e0e0;
-            outline: none;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-        }
-        .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-        .slider-value {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 24px;
-        }
-        .admin-link {
-            display: block;
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        .admin-link:hover {
-            background-color: #e9ecef;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        .admin-link i {
-            margin-right: 8px;
-            color: var(--primary-color);
-        }
-        .card-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
         
-        /* Responsive styles */
+        .card-footer { margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; text-align: right;}
+
+
+        .weather-card { border-top-color: var(--secondary-color) !important; }
+        .weather-container { display: flex; flex-direction: column; gap: 15px; }
+        .weather-main { display: flex; align-items: center; background-color: rgba(0,102,204,0.05); padding: 15px; border-radius: 10px; }
+        .weather-icon img { width: 70px; height: 70px; margin-right: 15px; }
+        .weather-info { flex-grow: 1; }
+        .weather-temp { font-size: 28px; font-weight: 700; color: var(--secondary-color); }
+        .weather-desc { font-size: 16px; margin-bottom: 5px; }
+        .weather-city { font-size: 14px; color: #666; }
+        .weather-details { display: flex; justify-content: space-around; text-align: center; background-color: #f8f9fa; padding: 10px; border-radius: 10px; margin-top:10px;}
+        .weather-detail { display: flex; flex-direction: column; align-items: center; }
+        .weather-detail i { font-size: 18px; color: var(--secondary-color); margin-bottom: 5px; }
+        .weather-detail span { font-size: 16px; font-weight: 600; }
+        .weather-detail small { font-size: 11px; color: #666; }
+        .weather-city-form { margin-top: 15px; }
+        .input-group { display: flex; border-radius: 50px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .weather-city-input { flex-grow: 1; padding: 10px 15px; border: none; outline: none; font-size: 14px; }
+        .btn-sm { padding: 8px 15px; font-size: 14px; }
+        .weather-error-message {
+            background-color: rgba(220, 53, 69, 0.1); color: var(--danger-color);
+            padding: 10px; border-radius: 8px; text-align: center; font-weight: 500;
+        }
+
         @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .header-title {
-                margin-bottom: 15px;
-                justify-content: center;
-            }
-            .user-info {
-                margin-bottom: 15px;
-                flex-direction: column;
-            }
-            .user-info span {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-            .control-buttons {
-                flex-direction: column;
-            }
-        }
-        
-        /* Styles pour la carte météo */
-        .weather-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .weather-main {
-            display: flex;
-            align-items: center;
-            background-color: rgba(0, 102, 204, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-        }
-        .weather-icon {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
-        }
-        .weather-info {
-            flex-grow: 1;
-        }
-        .weather-temp {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-        .weather-desc {
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--dark-color);
-        }
-        .weather-city {
-            font-size: 14px;
-            color: #666;
-        }
-        .weather-details {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-        }
-        .weather-detail {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .weather-detail i {
-            font-size: 20px;
-            color: var(--secondary-color);
-            margin-bottom: 5px;
-        }
-        .weather-detail span {
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .weather-detail small {
-            font-size: 12px;
-            color: #666;
-        }
-        .weather-api-notice {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 4px solid var(--warning-color);
-        }
-        .weather-api-notice p {
-            margin: 0 0 10px 0;
-            font-weight: 600;
-        }
-        .weather-api-notice i {
-            margin-right: 8px;
-            color: var(--warning-color);
-        }
-        .weather-api-notice ol {
-            margin: 10px 0 0 20px;
-            padding: 0;
-        }
-        .weather-api-notice li {
-            margin-bottom: 5px;
-        }
-        .weather-api-notice code {
-            background-color: #eee;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        .weather-api-notice a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .weather-api-notice a:hover {
-            text-decoration: underline;
-        }
-        .weather-city-form {
-            margin-top: 15px;
-        }
-        .input-group {
-            display: flex;
-            border-radius: 50px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .weather-city-input {
-            flex-grow: 1;
-            padding: 12px 15px;
-            border: none;
-            outline: none;
-            font-size: 14px;
-        }
-        .btn-sm {
-            padding: 8px 15px;
-            font-size: 14px;
-        }
-        .api-key-form {
-            margin-top: 15px;
-        }
-        .api-key-input {
-            flex-grow: 1;
-            padding: 12px 15px;
-            border: none;
-            outline: none;
-            font-size: 14px;
-        }
-        .weather-api-notice {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 4px solid var(--warning-color);
-        }
-        .weather-api-notice p {
-            margin: 0 0 10px 0;
-            font-weight: 600;
-        }
-        .weather-api-notice i {
-            margin-right: 8px;
-            color: var(--warning-color);
-        }
-        .weather-api-notice ol {
-            margin: 10px 0 0 20px;
-            padding: 0;
-        }
-        .weather-api-notice li {
-            margin-bottom: 5px;
-        }
-        .weather-api-notice code {
-            background-color: #eee;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        .weather-api-notice a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .weather-api-notice a:hover {
-            text-decoration: underline;
-        }
-        /* Styles pour le graphique du moteur */
-        .motor-chart-container {
-            margin-top: 20px;
-            position: relative;
-            height: 250px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .chart-title {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-        
-        .chart-title i {
-            margin-right: 10px;
-        }
-        
-        .chart-refresh-btn {
-            background-color: rgba(0, 102, 204, 0.1);
-            border: none;
-            border-radius: 50px;
-            padding: 8px 15px;
-            color: var(--secondary-color);
-            font-weight: 600;
-            cursor: pointer;
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        .chart-refresh-btn i {
-            margin-right: 8px;
-        }
-        
-        .chart-refresh-btn:hover {
-            background-color: rgba(0, 102, 204, 0.2);
-            transform: translateY(-2px);
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; text-align: center; }
+            .header-title { margin-bottom: 15px; }
+            .user-info { flex-direction: column; align-items: center; }
+            .user-info span { margin: 0 0 10px 0; }
+            .logout-btn, .nav-link { margin: 5px 0; }
         }
     </style>
 </head>
@@ -607,13 +174,15 @@
     <header>
         <div class="header-content">
             <div class="header-title">
-                <div class="header-logo">
-                    <i class="fas fa-tachometer-alt"></i>
-                </div>
-                <h1>Tableau de Bord - ManegePark</h1>
+                <div class="header-logo"><i class="fas fa-tachometer-alt"></i></div>
+                <h1>Tableau de Bord</h1>
             </div>
             <div class="user-info">
-                <span><i class="fas fa-user-circle"></i> Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?></span>
+                <span><i class="fas fa-user-circle"></i> Bienvenue, <?= htmlspecialchars($_SESSION['username'] ?? 'Visiteur') ?></span>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <a href="/admin" class="nav-link"><i class="fas fa-users-cog"></i> Administration</a>
+                <?php endif; ?>
+                <a href="/email-notifications" class="nav-link"><i class="fas fa-bell"></i> Notifications</a>
                 <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             </div>
         </div>
@@ -621,305 +190,162 @@
     
     <div class="container">
         <div class="dashboard-grid">
-            <!-- Statut du bouton "Prêt" -->
-            <div class="card" style="border-top-color: <?= ($latestData['button_status'] == 'Appuyé') ? '#28a745' : '#dc3545' ?>;">
-                <h2 class="card-title"><i class="fas fa-hand-pointer"></i> Bouton "Prêt"</h2>
-                <p class="card-description">Le bouton indique si tous les passagers sont correctement installés.</p>
-                <div class="status-indicator">
-                    <div class="status-circle <?= ($latestData['button_status'] == 'Appuyé') ? 'status-on' : 'status-off' ?>"></div>
-                    <span class="status-text"><?= htmlspecialchars($latestData['button_status']) ?></span>
+            
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="card-title"><i class="fas fa-cogs"></i> Contrôle du Moteur</h2>
+                    <div class="status-indicator">
+                        <div class="status-circle <?= ($currentMotorSpeed > 0) ? 'status-on' : 'status-off' ?>"></div>
+                        <span class="status-text">Vitesse Actuelle: <span id="current-speed-display"><?= htmlspecialchars($currentMotorSpeed) ?></span>/10</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="motor-speed-slider" style="display:block; margin-bottom: 8px; font-weight:600;">Régler la vitesse (0-10):</label>
+                        <input type="range" min="0" max="10" step="1" value="<?= htmlspecialchars($currentMotorSpeed) ?>" class="slider" id="motor-speed-slider">
+                        <div class="slider-value-display">Vitesse sélectionnée: <span id="slider-speed-value"><?= htmlspecialchars($currentMotorSpeed) ?></span></div>
+                        <button class="btn btn-primary" onclick="updateMotorSpeed()"><i class="fas fa-check"></i> Appliquer la Vitesse</button>
+                    </div>
+                </div>
+                <div class="card-footer">
+                     <a href="/history" class="btn btn-secondary"><i class="fas fa-history"></i> Voir l'Historique</a>
                 </div>
             </div>
-            
-            <!-- Météo -->
-            <div class="card" style="border-top-color: #0066CC;">
-                <h2 class="card-title"><i class="fas fa-cloud-sun"></i> Météo</h2>
-                <?php if (!empty($weatherData) && !isset($weatherData['error'])): ?>
-                <div class="weather-container">
-                    <div class="weather-main">
-                        <?php if (isset($weatherData['icon'])): ?>
-                        <img src="https://openweathermap.org/img/wn/<?= htmlspecialchars($weatherData['icon']) ?>@2x.png" alt="Icône météo" class="weather-icon">
+
+            <div class="card weather-card">
+                <div class="card-content">
+                    <h2 class="card-title"><i class="fas fa-cloud-sun"></i> Météo</h2>
+                    <?php if (isset($weatherData['error'])): ?>
+                        <div class="weather-error-message">
+                            <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($weatherData['error']) ?>
+                        </div>
+                        <?php if (strpos($weatherData['error'], '404') !== false || strpos($weatherData['error'], 'Impossible') !== false ): ?>
+                            <p style="text-align:center; margin-top:10px; color: #555;">Veuillez vérifier le nom de la ville et réessayer.</p>
                         <?php endif; ?>
-                        <div class="weather-info">
-                            <div class="weather-temp"><?= isset($weatherData['temperature']) ? htmlspecialchars($weatherData['temperature']) . '°C' : 'N/A' ?></div>
-                            <div class="weather-desc"><?= isset($weatherData['description']) ? htmlspecialchars($weatherData['description']) : 'N/A' ?></div>
-                            <div class="weather-city"><?= isset($weatherData['city']) ? htmlspecialchars($weatherData['city']) : 'N/A' ?></div>
+                    <?php else: ?>
+                    <div class="weather-container">
+                        <div class="weather-main">
+                            <?php if (isset($weatherData['icon'])): ?>
+                            <img src="https://openweathermap.org/img/wn/<?= htmlspecialchars($weatherData['icon']) ?>@2x.png" alt="Icône météo" class="weather-icon">
+                            <?php endif; ?>
+                            <div class="weather-info">
+                                <div class="weather-temp"><?= isset($weatherData['temperature']) ? htmlspecialchars($weatherData['temperature']) . '°C' : 'N/A' ?></div>
+                                <div class="weather-desc"><?= isset($weatherData['description']) ? htmlspecialchars($weatherData['description']) : 'N/A' ?></div>
+                                <div class="weather-city"><?= isset($weatherData['city']) ? htmlspecialchars($weatherData['city']) : 'N/A' ?></div>
+                            </div>
+                        </div>
+                        <div class="weather-details">
+                            <div class="weather-detail">
+                                <i class="fas fa-tint"></i>
+                                <span><?= isset($weatherData['humidity']) ? htmlspecialchars($weatherData['humidity']) . '%' : 'N/A' ?></span>
+                                <small>Humidité</small>
+                            </div>
+                            <div class="weather-detail">
+                                <i class="fas fa-wind"></i>
+                                <span><?= isset($weatherData['wind_speed']) ? round(floatval($weatherData['wind_speed']) * 3.6) . ' km/h' : 'N/A' ?></span>
+                                <small>Vent</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="weather-details">
-                        <div class="weather-detail">
-                            <i class="fas fa-tint"></i>
-                            <span><?= isset($weatherData['humidity']) ? htmlspecialchars($weatherData['humidity']) . '%' : 'N/A' ?></span>
-                            <small>Humidité</small>
-                        </div>
-                        <div class="weather-detail">
-                            <i class="fas fa-wind"></i>
-                            <span><?= isset($weatherData['wind_speed']) ? htmlspecialchars($weatherData['wind_speed']) . ' m/s' : 'N/A' ?></span>
-                            <small>Vent</small>
-                        </div>
-                    </div>
-                    <form class="weather-city-form" action="/update-weather-city" method="post">
+                    <?php endif; ?>
+                </div>
+                <div class="card-footer" style="border-top:0; padding-top:0;"> <!-- Footer for form, no border if content above has it -->
+                     <form class="weather-city-form" action="/update-weather-city" method="post" style="margin-top: <?php echo (isset($weatherData['error'])) ? '10px' : '0'; ?>;">
                         <div class="input-group">
-                            <input type="text" name="city" placeholder="Changer de ville..." class="weather-city-input" required>
+                            <input type="text" name="city" placeholder="Changer de ville..." class="weather-city-input" 
+                                value="<?= htmlspecialchars($_SESSION['weather_city'] ?? (defined('WEATHER_DEFAULT_CITY') ? WEATHER_DEFAULT_CITY : 'Paris')) ?>" required>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
-                </div>
-                <?php else: ?>
-                <div class="status-indicator">
-                    <div class="status-circle status-off"></div>
-                    <span class="status-text">
-                        <?php if (isset($weatherData['error'])): ?>
-                            <?= htmlspecialchars($weatherData['error']) ?>
-                        <?php else: ?>
-                            Données météo non disponibles
-                        <?php endif; ?>
-                    </span>
-                </div>
-                <?php if (isset($weatherData['error']) && strpos($weatherData['error'], 'Clé API') !== false): ?>
-                <div class="weather-api-notice">
-                    <p><i class="fas fa-info-circle"></i> Pour activer cette fonctionnalité:</p>
-                    <ol>
-                        <li>Créez un compte sur <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></li>
-                        <li>Obtenez une clé API gratuite dans votre profil</li>
-                        <li>Modifiez le fichier <code>config.php</code> et remplacez <code>YOUR_API_KEY</code> par votre clé</li>
-                    </ol>
-                </div>
-                <?php endif; ?>
-                <?php endif; ?>
-            </div>
-            
-            <!-- Statut du moteur avec potentiomètre intégré -->
-            <div class="card" style="border-top-color: <?= ($latestData['motor_status'] == 1) ? '#28a745' : '#dc3545' ?>;">
-                <h2 class="card-title"><i class="fas fa-cogs"></i> Moteur</h2>
-                <div class="status-indicator">
-                    <div class="status-circle <?= ($latestData['motor_status'] == 1) ? 'status-on' : 'status-off' ?>"></div>
-                    <span class="status-text"><?= ($latestData['motor_status'] == 1) ? 'Activé' : 'Désactivé' ?></span>
-                </div>
-                <div class="control-buttons">
-                    <button class="btn btn-success" onclick="updateActuator('motor', 1)"><i class="fas fa-play"></i> Activer</button>
-                    <button class="btn btn-danger" onclick="updateActuator('motor', 0)"><i class="fas fa-stop"></i> Désactiver</button>
-                </div>
-                
-                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-                
-                <!-- Contrôle du potentiomètre intégré -->
-                <h3 style="color: var(--primary-color); display: flex; align-items: center;"><i class="fas fa-sliders-h" style="margin-right: 10px;"></i> Contrôle de vitesse</h3>
-                <p>Valeur actuelle: <span class="slider-value"><?= round(($latestData['potentiometer_value'] / 1023) * 10, 1) ?></span> / 10</p>
-                <div class="gauge-container">
-                    <div class="gauge-fill" style="width: <?= ($latestData['potentiometer_value'] / 1023) * 100 ?>%;"></div>
-                </div>
-                <div class="slider-container">
-                    <input type="range" min="0" max="10" step="0.1" value="<?= round(($latestData['potentiometer_value'] / 1023) * 10, 1) ?>" class="slider" id="potentiometer-slider">
-                    <button class="btn btn-primary" onclick="updatePotentiometer()"><i class="fas fa-check"></i> Appliquer</button>
-                </div>
-                
-                <!-- Ajout du graphique d'évolution de la vitesse du moteur -->
-                <div class="motor-chart-container">
-                    <div class="chart-title">
-                        <i class="fas fa-chart-line"></i> Évolution de la vitesse du moteur
-                        <button id="refresh-chart" class="chart-refresh-btn"><i class="fas fa-sync-alt"></i> Actualiser</button>
-                    </div>
-                    <canvas id="motorSpeedChart"></canvas>
+                    <?php if ((!defined('WEATHER_API_KEY') || WEATHER_API_KEY === 'YOUR_API_KEY' || WEATHER_API_KEY === '')) : ?>
+                        <div style="background-color: #fff3cd; border-left: 4px solid #ffeeba; color: #856404; padding: 10px; margin-top: 15px; border-radius: 5px; font-size: 0.9em;">
+                            <i class="fas fa-info-circle"></i> La clé API Météo n'est pas configurée. Modifiez <code>src/config.php</code>.
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             
-            <!-- Statut de la LED -->
-            <div class="card" style="border-top-color: <?= ($latestData['led_status'] == 1) ? '#28a745' : '#dc3545' ?>;">
-                <h2 class="card-title"><i class="fas fa-lightbulb"></i> LED</h2>
-                <div class="status-indicator">
-                    <div class="status-circle <?= ($latestData['led_status'] == 1) ? 'status-on' : 'status-off' ?>"></div>
-                    <span class="status-text"><?= ($latestData['led_status'] == 1) ? 'Allumée' : 'Éteinte' ?></span>
-                </div>
-                <div class="control-buttons">
-                    <button class="btn btn-success" onclick="updateActuator('led', 1)"><i class="fas fa-power-off"></i> Allumer</button>
-                    <button class="btn btn-danger" onclick="updateActuator('led', 0)"><i class="fas fa-power-off"></i> Éteindre</button>
+            <!-- Température Simulé Tile -->
+            <div class="card" id="temperature-card">
+                <div class="card-content">
+                    <h2 class="card-title"><i class="fas fa-thermometer-half"></i> Température Actuelle</h2>
+                    <?php if ($latestTemperature): ?>
+                        <?php
+                            $tempValue = floatval($latestTemperature['valeur']);
+                            $tempStatusClass = '';
+                            $tempStatusIcon = 'fa-thermometer-half'; // Default
+                            if ($tempValue > 37) {
+                                $tempStatusClass = 'status-hot'; // Will be styled as green
+                                $tempStatusIcon = 'fa-thermometer-full';
+                                $tempStatusClass = ($tempValue > 37) ? 'status-hot' : 'status-normal-or-cold';
+
+                            } else {
+                                 $tempStatusClass = 'status-normal-or-cold';
+                            }
+                        ?>
+                        <div class="status-indicator">
+                            <div class="status-circle <?= $tempValue > 37 ? 'status-on-custom-green' : 'status-off-custom-red' // Custom classes for temp
+                            ?>"></div>
+                            <span class="status-text">
+                                <?= htmlspecialchars(number_format($tempValue, 1)) ?> °C
+                            </span>
+                        </div>
+                        <p style="font-size: 0.9em; color: #555;">
+                            Dernière mesure: <?= htmlspecialchars(date("d/m/Y H:i:s", strtotime($latestTemperature['dates']))) ?>
+                        </p>
+                    <?php else: ?>
+                        <div class="status-indicator">
+                            <div class="status-circle status-off"></div> <!-- Default off if no data -->
+                            <span class="status-text">N/A</span>
+                        </div>
+                        <p style="font-size: 0.9em; color: #555;">Aucune donnée de température disponible.</p>
+                    <?php endif; ?>
                 </div>
             </div>
-        </div>
-        
-        <!-- Historique récent -->
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-history"></i> Historique Récent</h2>
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Date/Heure</th>
-                        <th>Bouton</th>
-                        <th>Moteur</th>
-                        <th>LED</th>
-                        <th>Potentiomètre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($history as $entry): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($entry['timestamp']) ?></td>
-                        <td>
-                            <div class="status-circle <?= ($entry['button_status'] == 'Appuyé') ? 'status-on' : 'status-off' ?>" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 12px; height: 12px;"></div>
-                            <?= htmlspecialchars($entry['button_status']) ?>
-                        </td>
-                        <td>
-                            <div class="status-circle <?= ($entry['motor_status'] == 1) ? 'status-on' : 'status-off' ?>" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 12px; height: 12px;"></div>
-                            <?= ($entry['motor_status'] == 1) ? 'Activé' : 'Désactivé' ?>
-                        </td>
-                        <td>
-                            <div class="status-circle <?= ($entry['led_status'] == 1) ? 'status-on' : 'status-off' ?>" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 12px; height: 12px;"></div>
-                            <?= ($entry['led_status'] == 1) ? 'Allumée' : 'Éteinte' ?>
-                        </td>
-                        <td><?= htmlspecialchars($entry['potentiometer_value']) ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <a href="/history" class="view-all-link">Voir l'historique complet <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <?php if ($_SESSION['role'] === 'admin'): ?>
-        <a href="/admin" class="admin-link"><i class="fas fa-users-cog"></i> Administration des utilisateurs</a>
-        <?php endif; ?>
+
+        </div> <!-- End of dashboard-grid -->
     </div>
     
     <script>
-        // Fonction pour mettre à jour les actionneurs (moteur, LED)
-        function updateActuator(type, value) {
+        function updateMotorSpeed() {
+            const speedSlider = document.getElementById('motor-speed-slider');
+            const speedValue = parseInt(speedSlider.value, 10);
+
             const data = new FormData();
+            data.append('motor_speed', speedValue);
             
-            if (type === 'motor') {
-                data.append('motor_status', value);
-                data.append('led_status', <?= $latestData['led_status'] ?>);
-            } else if (type === 'led') {
-                data.append('motor_status', <?= $latestData['motor_status'] ?>);
-                data.append('led_status', value);
-            }
-            
-            data.append('potentiometer_value', <?= $latestData['potentiometer_value'] ?>);
-            
-            fetch('/update-actuators', {
+            fetch('/update-motor-speed', {
                 method: 'POST',
                 body: data
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Recharger la page pour voir les changements
-                    location.reload();
+                    document.getElementById('current-speed-display').textContent = speedValue;
+                    const statusCircle = document.querySelector('.card .status-indicator .status-circle');
+                    if (speedValue > 0) {
+                        statusCircle.classList.remove('status-off');
+                        statusCircle.classList.add('status-on');
+                    } else {
+                        statusCircle.classList.remove('status-on');
+                        statusCircle.classList.add('status-off');
+                    }
+                } else {
+                    alert('Erreur lors de la mise à jour de la vitesse: ' + (data.message || 'Erreur inconnue'));
                 }
-            });
-        }
-        
-        // Fonction pour mettre à jour le potentiomètre
-        function updatePotentiometer() {
-            const sliderValue = document.getElementById('potentiometer-slider').value;
-            const data = new FormData();
-            
-            // Convertir la valeur de 0-10 à 0-1023
-            const potValue = Math.round((sliderValue / 10) * 1023);
-            
-            data.append('motor_status', <?= $latestData['motor_status'] ?>);
-            data.append('led_status', <?= $latestData['led_status'] ?>);
-            data.append('potentiometer_value', potValue);
-            
-            fetch('/update-actuators', {
-                method: 'POST',
-                body: data
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Recharger la page pour voir les changements
-                    location.reload();
-                }
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Erreur de communication avec le serveur.');
             });
         }
         
-        // Mettre à jour l'affichage de la valeur du potentiomètre en temps réel
-        const slider = document.getElementById('potentiometer-slider');
-        const sliderValue = document.querySelector('.slider-value');
-        const gaugeFill = document.querySelector('.gauge-fill');
+        const speedSlider = document.getElementById('motor-speed-slider');
+        const sliderSpeedValueDisplay = document.getElementById('slider-speed-value');
         
-        slider.addEventListener('input', function() {
-            sliderValue.textContent = this.value;
-            gaugeFill.style.width = (this.value / 10) * 100 + '%';
-        });
-        
-        // Initialisation du graphique de vitesse du moteur
-        const ctx = document.getElementById('motorSpeedChart').getContext('2d');
-        let motorChart;
-        
-        // Fonction pour initialiser le graphique
-        function initChart(labels, data) {
-            motorChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Vitesse du moteur (0-10)',
-                        data: data,
-                        backgroundColor: 'rgba(255, 107, 0, 0.2)',
-                        borderColor: '#FF6B00',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#FF6B00',
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 10,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false
-                        }
-                    }
-                }
+        if (speedSlider && sliderSpeedValueDisplay) {
+            speedSlider.addEventListener('input', function() {
+                sliderSpeedValueDisplay.textContent = this.value;
             });
         }
-        
-        // Fonction pour récupérer les données du moteur depuis l'API
-        function fetchMotorData() {
-            fetch('/api/motor-speed-history')
-                .then(response => response.json())
-                .then(data => {
-                    const labels = data.map(entry => {
-                        const date = new Date(entry.time);
-                        return date.toLocaleTimeString();
-                    });
-                    const speeds = data.map(entry => entry.speed);
-                    
-                    if (motorChart) {
-                        motorChart.destroy();
-                    }
-                    
-                    initChart(labels, speeds);
-                })
-                .catch(error => console.error('Erreur lors de la récupération des données du moteur:', error));
-        }
-        
-        // Initialiser le graphique avec les données initiales
-        initChart(<?= json_encode($chartLabels) ?>, <?= json_encode($chartData) ?>);
-        
-        // Configurer le bouton d'actualisation
-        document.getElementById('refresh-chart').addEventListener('click', fetchMotorData);
-        
-        // Rafraîchir automatiquement la page toutes les 10 secondes
-        setTimeout(() => {
-            location.reload();
-        }, 10000);
     </script>
 </body>
-</html> 
+</html>

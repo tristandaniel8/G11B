@@ -43,10 +43,10 @@ function clean_db_data($data) {
 }
 
 // Configuration pour l'API météo
-// Remplacez 'YOUR_API_KEY' par votre clé API OpenWeatherMap
+// Clé API OpenWeatherMap.
 // Pour obtenir une clé API gratuite:
 // 1. Créez un compte sur https://openweathermap.org/
 // 2. Connectez-vous et allez dans "API keys" dans votre profil
-// 3. Copiez votre clé API et collez-la ci-dessous
-define('WEATHER_API_KEY', '16fec1c45d094594a945dccdca93ec16'); // À remplacer par une clé API valide
+// 3. Copiez votre clé API et collez-la ci-dessous si vous souhaitez la changer.
+define('WEATHER_API_KEY', '16fec1c45d094594a945dccdca93ec16'); 
 define('WEATHER_DEFAULT_CITY', 'Paris'); // Ville par défaut 

@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - ManegePark</title>
+    <title>Réinitialiser Mot de Passe - ManegePark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+     <style>
         :root {
             --primary-color: #FF6B00;
             --secondary-color: #0066CC;
-            --accent-color: #FFD700;
             --dark-color: #333;
-            --light-color: #fff;
         }
         body {
             font-family: 'Montserrat', Arial, sans-serif;
@@ -22,7 +20,7 @@
             justify-content: center;
             align-items: center;
             background-image: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(0, 102, 204, 0.1) 100%), 
-                              url('https://images.unsplash.com/photo-1513885535751-8b9238bd345a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+                              url('https://images.unsplash.com/photo-1560306843-33986aebaf12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -52,7 +50,7 @@
             color: var(--primary-color);
             margin-top: 0;
             margin-bottom: 30px;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
         }
         .logo {
@@ -70,7 +68,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .form-group {
-            margin-bottom: 20px; /* Reduced margin */
+            margin-bottom: 25px;
             position: relative;
         }
         label {
@@ -78,39 +76,25 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--dark-color);
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        input[type="text"],
-        input[type="email"], /* Added email type */
         input[type="password"] {
             width: 100%;
-            padding: 12px; /* Reduced padding */
+            padding: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 15px; /* Slightly reduced font size */
+            font-size: 16px;
             transition: all 0.3s;
-            background-color: rgba(255, 255, 255, 0.9);
         }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
         input[type="password"]:focus {
             border-color: var(--primary-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
         }
-        .input-icon {
-            position: absolute;
-            top: 40px; /* Adjusted for reduced padding */
-            right: 15px;
-            color: #999;
-        }
         .btn {
             background: linear-gradient(45deg, var(--primary-color), #FF9500);
             color: white;
-            padding: 12px 20px; /* Reduced padding */
+            padding: 15px 20px;
             border: none;
             width: 100%;
             font-size: 16px;
@@ -120,12 +104,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
         }
         .btn:hover {
             transform: translateY(-2px);
         }
-        .message { /* Unified error and success message styling */
+        .message {
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
@@ -136,82 +119,68 @@
             color: #dc3545;
             background-color: rgba(220, 53, 69, 0.1);
         }
-        .login-link, .back-link {
+        .login-link {
             text-align: center;
-            margin-top: 20px; /* Reduced margin */
+            margin-top: 20px;
         }
-        .login-link a, .back-link a {
+        .login-link a {
             color: var(--secondary-color);
             text-decoration: none;
             font-weight: 600;
         }
-        .login-link a:hover, .back-link a:hover {
+        .login-link a:hover {
             color: var(--primary-color);
             text-decoration: underline;
-        }
-        .password-requirements {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-        .logo {
-            animation: float 3s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <span>MP</span>
-        </div>
-        <h1>Inscription</h1>
-        
-        <?php if (!empty($error)): ?>
-            <div class="message error">
-                <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?>
-            </div>
-        <?php endif; ?>
-        
-        <form method="post" action="/register">
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" placeholder="Choisissez un nom d'utilisateur" required>
-                <i class="fas fa-user input-icon"></i>
-            </div>
+        <div class="logo"><span>MP</span></div>
+        <h1>Réinitialiser Votre Mot de Passe</h1>
 
-            <div class="form-group">
-                <label for="email">Adresse Email</label>
-                <input type="email" id="email" name="email" placeholder="Entrez votre adresse email" required>
-                <i class="fas fa-envelope input-icon"></i>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" placeholder="Créez un mot de passe" required>
-                <i class="fas fa-lock input-icon"></i>
-                <div class="password-requirements">Le mot de passe doit contenir au moins 6 caractères.</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="confirm_password">Confirmer le mot de passe</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmez votre mot de passe" required>
-                <i class="fas fa-lock input-icon"></i>
-            </div>
-            
-            <button type="submit" class="btn">S'inscrire <i class="fas fa-user-plus"></i></button>
-        </form>
+        <?php
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $error = $_SESSION['reset_password_error'] ?? null; // Get error from session
+        unset($_SESSION['reset_password_error']); // Clear it after displaying
+        $token = $_GET['token'] ?? ($_POST['token'] ?? ''); // Get token from GET or POST
+        $validToken = $validToken ?? false; // This should be set by the controller
         
+        // Controller should set $validToken. If not, re-check for safety, but prefer controller logic.
+        if (!$validToken && !empty($token) && !$error) {
+             // Basic check if controller didn't set $validToken, you might need more robust check
+             // This is just a fallback, AuthController should manage $validToken state
+             $tokenHash = hash('sha256', $token);
+             // Assume $userModel would be available through some means or this check is simplified/removed
+             // For now, we rely on error message from controller if token is invalid.
+        }
+        ?>
+
+        <?php if ($error): ?>
+            <div class="message error"><i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+
+        <?php if ($validToken && !$error) : // Only show form if token is valid and no overriding error ?>
+            <form method="post" action="/reset-password">
+                <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+                <div class="form-group">
+                    <label for="password">Nouveau mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="Entrez votre nouveau mot de passe" required>
+                    <i class="fas fa-lock" style="position: absolute; top: 42px; right: 15px; color: #999;"></i>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirmer le mot de passe</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmez votre nouveau mot de passe" required>
+                    <i class="fas fa-lock" style="position: absolute; top: 42px; right: 15px; color: #999;"></i>
+                </div>
+                <button type="submit" class="btn">Réinitialiser <i class="fas fa-key"></i></button>
+            </form>
+        <?php elseif(!$error) : // If no error but token is not valid (e.g. initial GET without token) ?>
+             <div class="message error"><i class="fas fa-exclamation-circle"></i> Token invalide ou manquant.</div>
+        <?php endif; ?>
+
         <div class="login-link">
-            <a href="/login"><i class="fas fa-sign-in-alt"></i> Déjà un compte ? Se connecter</a>
-        </div>
-        
-        <div class="back-link">
-            <a href="/"><i class="fas fa-home"></i> Retour à l'accueil</a>
+            <a href="/login"><i class="fas fa-arrow-left"></i> Retour à la connexion</a>
         </div>
     </div>
 </body>

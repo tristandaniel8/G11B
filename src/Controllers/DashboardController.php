@@ -10,9 +10,12 @@ class DashboardController {
     private SensorModel $sensorModel;
     private EmailNotification $emailNotification;
     private WeatherModel $weatherModel;
+    private PDO $pdo;
     
     public function __construct() {
-        // Vérifier si l'utilisateur est connecté
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
             exit;
@@ -24,177 +27,116 @@ class DashboardController {
         $db_pass = getenv('DB_PASS');
         
         $db = new Database($db_host, $db_name, $db_user, $db_pass);
-        $this->sensorModel = new SensorModel($db->getConnection());
-        $this->emailNotification = new EmailNotification($db->getConnection());
+        $this->pdo = $db->getConnection();
+        $this->sensorModel = new SensorModel($this->pdo);
+        $this->emailNotification = new EmailNotification($this->pdo);
         
-        // Utiliser la ville stockée dans la session ou la ville par défaut
         $city = $_SESSION['weather_city'] ?? WEATHER_DEFAULT_CITY;
-        
-        // Initialiser le modèle météo avec la clé API par défaut
         $this->weatherModel = new WeatherModel(WEATHER_API_KEY, $city);
     }
     
     public function index() {
-        // Récupérer les dernières données des capteurs
-        $latestData = $this->sensorModel->getLatestData();
-        
-        // Récupérer l'historique récent
-        $history = $this->sensorModel->getHistory(5);
-        
-        // Récupérer les données météo
+        $currentMotorSpeed = $this->sensorModel->getMotorSpeed(1); 
         $weatherData = $this->weatherModel->getCurrentWeather();
         
-        // S'assurer que $weatherData est un tableau
         if (!is_array($weatherData)) {
             $weatherData = ['error' => 'Données météo non disponibles'];
         }
-        
-        // Récupérer la dernière vitesse du moteur
-        $motorSpeed = $this->sensorModel->getLatestMotorSpeed();
-        
-        // Récupérer l'historique des vitesses du moteur pour le graphique
-        $motorSpeedHistory = $this->sensorModel->getMotorSpeedHistory(20);
-        
-        // Préparer les données pour le graphique
-        $chartLabels = [];
-        $chartData = [];
-        
-        foreach ($motorSpeedHistory as $entry) {
-            // Formater la date pour l'affichage
-            $date = new DateTime($entry['updateTime']);
-            $chartLabels[] = $date->format('H:i:s');
-            $chartData[] = $entry['newSpeed'];
-        }
+
+        $latestTemperature = $this->sensorModel->getLatestTemperatureReading();
         
         require_once __DIR__ . '/../Views/dashboard.php';
     }
     
     public function history() {
-        $startDate = $_GET['start_date'] ?? null;
-        $endDate = $_GET['end_date'] ?? null;
-        $type = $_GET['type'] ?? null;
+    $startDate = $_GET['start_date'] ?? null;
+    $endDate = $_GET['end_date'] ?? null;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $itemsPerPage = 15; // Or make this configurable
+
+    // Get total count for pagination
+    $totalItems = $this->sensorModel->getFilteredMotorSpeedHistoryCount(1, $startDate, $endDate);
+    $totalPages = ceil($totalItems / $itemsPerPage);
+    $offset = ($page - 1) * $itemsPerPage;
+
+    // Fetch paginated history
+    $motorSpeedHistory = $this->sensorModel->getFilteredMotorSpeedHistory(1, $startDate, $endDate, $itemsPerPage, $offset);
+    
+    if (isset($_GET['export']) && $_GET['export'] === 'csv') {
+        // Fetch all data for CSV export, not just paginated
+        $allMotorSpeedHistory = $this->sensorModel->getFilteredMotorSpeedHistory(1, $startDate, $endDate, $totalItems, 0);
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="motor_speed_history.csv"');
         
-        // Récupérer l'historique filtré
-        $history = $this->sensorModel->getFilteredHistory($startDate, $endDate, $type);
+        $output = fopen('php://output', 'w');
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF)); 
         
-        // Exporter en CSV si demandé
-        if (isset($_GET['export']) && $_GET['export'] === 'csv') {
-            header('Content-Type: text/csv');
-            header('Content-Disposition: attachment; filename="sensor_history.csv"');
-            
-            $output = fopen('php://output', 'w');
-            fputcsv($output, ['ID', 'Timestamp', 'Button Status', 'Motor Status', 'LED Status', 'Potentiometer Value']);
-            
-            foreach ($history as $row) {
-                fputcsv($output, [
-                    $row['id'],
-                    $row['timestamp'],
-                    $row['button_status'],
-                    $row['motor_status'] ? 'On' : 'Off',
-                    $row['led_status'] ? 'On' : 'Off',
-                    $row['potentiometer_value']
-                ]);
-            }
-            
-            fclose($output);
-            exit;
+        fputcsv($output, ['ID Mise à Jour', 'Date/Heure', 'Nouvelle Vitesse (0-10)']);
+        
+        foreach ($allMotorSpeedHistory as $row) {
+            fputcsv($output, [
+                $row['updateId'],
+                $row['updateTime'],
+                $row['newSpeed']
+            ]);
         }
         
-        require_once __DIR__ . '/../Views/history.php';
+        fclose($output);
+        exit;
     }
     
-    public function updateActuators() {
-        // Vérifier si c'est une requête AJAX
+    require_once __DIR__ . '/../Views/history.php';
+    }
+    
+    public function updateMotorSpeed() { // Renamed from updateActuators
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $motorStatus = isset($_POST['motor_status']) ? (int)$_POST['motor_status'] : 0;
-            $ledStatus = isset($_POST['led_status']) ? (int)$_POST['led_status'] : 0;
-            $potentiometerValue = isset($_POST['potentiometer_value']) ? (int)$_POST['potentiometer_value'] : 0;
+            $speed = isset($_POST['motor_speed']) ? (int)$_POST['motor_speed'] : -1; // Expect motor_speed
+            $motorId = 1; // Assuming motorId 1
+
+            if ($speed < 0 || $speed > 10) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Vitesse invalide.']);
+                exit;
+            }
+
+            $oldSpeed = $this->sensorModel->getMotorSpeed($motorId);
+            $success = $this->sensorModel->updateMotorSpeed($motorId, $speed);
             
-            // Récupérer les anciennes valeurs pour comparer
-            $latestData = $this->sensorModel->getLatestData();
-            $oldMotorStatus = $latestData['motor_status'] ?? 0;
-            $oldLedStatus = $latestData['led_status'] ?? 0;
-            $oldPotentiometerValue = $latestData['potentiometer_value'] ?? 0;
-            
-            // Mettre à jour les actionneurs dans la base de données
-            $success = $this->sensorModel->updateActuators($motorStatus, $ledStatus, $potentiometerValue);
-            
-            // Envoyer des notifications par email si nécessaire
-            $userId = $_SESSION['user_id'];
-            
-            // Notification pour le moteur
-            if ($motorStatus != $oldMotorStatus) {
-                $eventType = $motorStatus ? 'motor_on' : 'motor_off';
-                $details = $motorStatus ? 'Le moteur a été activé' : 'Le moteur a été désactivé';
+            if ($success && $speed != $oldSpeed) {
+                $userId = $_SESSION['user_id'];
+                $eventType = 'motor_speed_changed';
+                $details = "La vitesse du moteur a été changée de {$oldSpeed} à {$speed}.";
+                // Consider if notification is needed for every speed change or only significant ones/on-off
                 $this->emailNotification->sendAlertNotification($userId, $eventType, $details);
             }
             
-            // Notification pour la LED
-            if ($ledStatus != $oldLedStatus) {
-                $eventType = $ledStatus ? 'led_on' : 'led_off';
-                $details = $ledStatus ? 'La LED a été allumée' : 'La LED a été éteinte';
-                $this->emailNotification->sendAlertNotification($userId, $eventType, $details);
-            }
-            
-            // Notification pour le potentiomètre (seulement si la valeur a changé significativement)
-            if (abs($potentiometerValue - $oldPotentiometerValue) > 50) {
-                $eventType = 'potentiometer_changed';
-                $details = "La valeur du potentiomètre a changé de $oldPotentiometerValue à $potentiometerValue";
-                $this->emailNotification->sendAlertNotification($userId, $eventType, $details);
-            }
-            
-            // Retourner une réponse JSON
             header('Content-Type: application/json');
             echo json_encode(['success' => $success]);
             exit;
         }
-        
-        // Rediriger vers le tableau de bord si ce n'est pas une requête AJAX
         header('Location: /dashboard');
         exit;
     }
     
-    /**
-     * Met à jour la ville pour les données météo
-     */
     public function updateWeatherCity() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['city'])) {
-            // Récupérer la ville depuis le formulaire
             $city = trim($_POST['city']);
-            
             if (!empty($city)) {
-                // Stocker la ville dans la session
                 $_SESSION['weather_city'] = $city;
-                
-                // Mettre à jour la ville dans le modèle météo
-                $this->weatherModel->setCity($city);
+                $this->weatherModel->setCity($city); // Update in model instance
             }
         }
-        
-        // Rediriger vers le tableau de bord
         header('Location: /dashboard');
         exit;
     }
     
-    /**
-     * Récupère l'historique des mises à jour de vitesse du moteur au format JSON
-     */
     public function getMotorSpeedHistoryJson() {
-        // Désactiver la vérification d'authentification pour cette méthode API
-        $db_host = getenv('DB_HOST');
-        $db_name = getenv('DB_NAME');
-        $db_user = getenv('DB_USER');
-        $db_pass = getenv('DB_PASS');
+        // This can be used by an AJAX call from the history page graph
+        $motorId = $_GET['motorId'] ?? 1;
+        $limit = $_GET['limit'] ?? 50;
+        $motorSpeedHistory = $this->sensorModel->getMotorSpeedHistory((int)$motorId, (int)$limit);
         
-        $db = new Database($db_host, $db_name, $db_user, $db_pass);
-        $sensorModel = new SensorModel($db->getConnection());
-        
-        // Récupérer l'historique des vitesses
-        $motorSpeedHistory = $sensorModel->getMotorSpeedHistory(50);
-        
-        // Préparer les données pour le graphique
         $chartData = [];
-        
         foreach ($motorSpeedHistory as $entry) {
             $chartData[] = [
                 'time' => $entry['updateTime'],
@@ -202,9 +144,8 @@ class DashboardController {
             ];
         }
         
-        // Retourner les données au format JSON
         header('Content-Type: application/json');
         echo json_encode($chartData);
         exit;
     }
-} 
+}

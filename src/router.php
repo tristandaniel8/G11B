@@ -9,117 +9,105 @@ require_once __DIR__ . '/Controllers/EmailNotificationController.php';
 require_once __DIR__ . '/Controllers/EcoResponsibilityController.php';
 require_once __DIR__ . '/Controllers/ContactController.php';
 
-// Démarrer la session si elle n'est pas déjà démarrée
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Récupérer l'URI de la requête
 $request_uri = strtok($_SERVER['REQUEST_URI'], '?');
 
-// Router les requêtes vers les contrôleurs appropriés
 switch ($request_uri) {
-    // Page d'accueil
     case '/':
         $controller = new HomeController();
         $controller->index();
         break;
     
-    // Authentification
     case '/login':
         $controller = new AuthController();
         $controller->login();
         break;
-        
     case '/register':
         $controller = new AuthController();
         $controller->register();
         break;
-        
     case '/logout':
         $controller = new AuthController();
         $controller->logout();
         break;
+    case '/forgot-password':
+        $controller = new AuthController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->handleForgotPassword();
+        } else {
+            $controller->showForgotPasswordForm();
+        }
+        break;
+    case '/reset-password':
+        $controller = new AuthController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->handleResetPassword();
+        } else {
+            $controller->showResetPasswordForm();
+        }
+        break;
     
-    // Tableau de bord et fonctionnalités
     case '/dashboard':
         $controller = new DashboardController();
         $controller->index();
         break;
-        
-    case '/history':
+    case '/history': // For motor speed history
         $controller = new DashboardController();
         $controller->history();
         break;
-        
-    case '/update-actuators':
+    case '/update-motor-speed': // Renamed from /update-actuators
         $controller = new DashboardController();
-        $controller->updateActuators();
+        $controller->updateMotorSpeed();
         break;
-        
     case '/update-weather-city':
         $controller = new DashboardController();
         $controller->updateWeatherCity();
         break;
-    
-    // API pour récupérer l'historique du moteur
-    case '/api/motor-speed-history':
+    case '/api/motor-speed-history': // For AJAX graph updates on history page
         $controller = new DashboardController();
         $controller->getMotorSpeedHistoryJson();
         break;
     
-    // Page d'écoresponsabilité
     case '/eco-responsibility':
         $controller = new EcoResponsibilityController();
         $controller->index();
         break;
-    
-    // Page de contact
     case '/contact':
         $controller = new ContactController();
         $controller->index();
         break;
-        
     case '/contact/submit':
         $controller = new ContactController();
         $controller->submit();
         break;
     
-    // Administration
     case '/admin':
         $controller = new AdminController();
         $controller->index();
         break;
-        
     case '/admin/create-user':
         $controller = new AdminController();
         $controller->createUser();
         break;
-        
     case '/admin/delete-user':
         $controller = new AdminController();
         $controller->deleteUser();
         break;
-        
     case '/admin/update-role':
         $controller = new AdminController();
         $controller->updateUserRole();
         break;
         
-    // Notifications par email
     case '/email-notifications':
         $controller = new EmailNotificationController();
         $controller->index();
         break;
-        
-    // Débogage des emails
-    case '/debug-email':
+    case '/debug-email': // Keep for MailHog debugging if needed
         require_once __DIR__ . '/debug_email.php';
         break;
     
-    // Page non trouvée
     default:
         http_response_code(404);
-        echo "404 Not Found";
+        // You could create a Views/404.php and include it here
+        echo "404 Not Found - Page '" . htmlspecialchars($request_uri) . "' non trouvée.";
         break;
 }

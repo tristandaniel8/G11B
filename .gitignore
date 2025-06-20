@@ -1,1 +1,56 @@
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Dependencies / Build artifacts
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+yarn.lock
+
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 my_project_context.txt
+
+# Environment files
+.env
+.env.*
+!/.env.example
+
+# API Keys / Secrets (if you ever move them out of config.php)
+api_keys.json 
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
